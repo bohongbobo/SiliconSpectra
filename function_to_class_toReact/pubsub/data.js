@@ -1,0 +1,37 @@
+export default [{
+	name: 'bobTheFrog',
+	age: 2,
+	gender: 'male',
+	favoriteFood: 'fly',
+	weight: 5,
+}, {
+	name: 'lisaTheFrog',
+	age: 3,
+	gender: 'female',
+	favoriteFood: 'fly',
+	weight: 1,
+}, {
+	name: 'sallyTheFrog',
+	age: 10,
+	gender: 'female',
+	favoriteFood: 'caterpillar',
+	weight: 20,
+}, {
+	name: 'mikeTheFrog',
+	age: 1,
+	gender: 'male',
+	favoriteFood: 'worm',
+	weight: 7,
+}, {
+	name: 'georgeTheFrog',
+	age: 7,
+	gender: 'male',
+	favoriteFood: 'fly',
+	weight: 28,
+}, {
+	name: 'kellyTheFrog',
+	age: 3,
+	gender: 'female',
+	favoriteFood: 'ladybug',
+	weight: 3,
+}]

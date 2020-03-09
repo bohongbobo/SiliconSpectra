@@ -1,0 +1,5 @@
+The 3 principles
+1. Single source of truth (one big state object that descript everything whithin the app)
+    base on the object, one big state object descript how the app should look and react will take care of it
+2. State is read only. (immutablity, prevent unexpected error)
+3. changes using pure functions
