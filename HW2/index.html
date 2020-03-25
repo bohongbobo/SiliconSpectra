@@ -5,21 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Movie List</title>
     <link rel="stylesheet" href="index.css" />
+    <link
+      rel="stylesheet"
+      href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"
+    />
+
+    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="./swap.js"></script> -->
   </head>
+
   <body>
-    <div class="tittle">
-      <img src="./movieDB.jpg" alt="" />
-      <h3>Movies List</h3>
-    </div>
-    <hr />
-    <h2>The Most Popular Movies</h2>
+    <div id="popUp" class="popUp"></div>
 
-    <div class="controlpad">
-      <button>&#8592;</button>
-      <p></p>
-      <button>&#8594;</button>
-    </div>
+    <div id="middleLayer" class="middleLayer"></div>
 
-    <div class="container"></div>
+    <div class="main" id="main">
+      <div class="topTitle">
+        <div class="tittle">
+          <img src="./movieDB.jpg" alt="" />
+          <h3 onclick="showMovie()" class="section" id="movieListTitle">
+            Movies List
+          </h3>
+          <h3 onclick="showLiked()" class="section" id="likedMoviesTitle">
+            Liked Movies
+          </h3>
+          <p id="number">0</p>
+        </div>
+        <button id="config">CONFIG</button>
+      </div>
+
+      <hr />
+
+      <div id="mainContainer">
+        <div id="popularMovies">
+          <h2>The Most Popular Movies</h2>
+
+          <div class="controlpad">
+            <button onclick="prev()" id="prev">&#8592;</button>
+            <p id="pages"></p>
+            <button onclick="next()" id="next">&#8594;</button>
+          </div>
+          <div id="movieContainer"></div>
+        </div>
+
+        <div id="likedMovies">
+          <div class="controlpad">
+            <h2 id="text">
+              Liked List
+            </h2>
+          </div>
+          <div id="likedMovieContainer"></div>
+        </div>
+      </div>
+    </div>
+    <div id="configPage"></div>
+
+    <script src="./index.js"></script>
   </body>
 </html>

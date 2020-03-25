@@ -1,0 +1,432 @@
+var request = new XMLHttpRequest();
+const API_KEY = "76177c7fb779da86955a3e56aab3bcec";
+const IMG_URL = "https://image.tmdb.org/t/p/w500";
+let page = 1;
+const likedMovie = [];
+document.getElementById("config").style.display = "none";
+document.getElementById("configPage").style.display = "none";
+
+const genre_map = {
+  "28": "Action",
+  "12": "Adventure",
+  "16": "Animation",
+  "35": "Comedy",
+  "80": "Crime",
+  "99": "Documentary",
+  "18": "Drama",
+  "10751": "Family",
+  "14": "Fantasy",
+  "36": "History",
+  "27": "Horror",
+  "10402": "Music",
+  "9648": "Mystery",
+  "10749": "Romance",
+  "878": "Science Fiction",
+  "10770": "TV Movie",
+  "53": "Thriller",
+  "10752": "War",
+  "37": "Western"
+};
+const genre_color = {
+  "28": "ForestGreen",
+  "12": "SteelBlue",
+  "16": "pink",
+  "35": "DarkTurquoise",
+  "80": "DarkSlateBlue",
+  "99": "FireBrick",
+  "18": "LightSeaGreen",
+  "10751": "GoldenRod",
+  "14": "Salmon",
+  "36": "Olive",
+  "27": "Maroon",
+  "10402": "Fuchsia",
+  "9648": "LightSkyBlue",
+  "10749": "Romance",
+  "878": "LightCoral",
+  "10770": "Indigo",
+  "53": "DarkViolet",
+  "10752": "Gold",
+  "37": "IndianRed"
+};
+
+prev = () => {
+  if (page > 1) {
+    page--;
+    document.getElementById("movieContainer").innerHTML = "";
+    getMovie();
+  }
+  // console.log(page);
+};
+
+next = () => {
+  if (page !== 500) {
+    page++;
+    document.getElementById("movieContainer").innerHTML = "";
+    getMovie();
+  }
+
+  // console.log(page);
+};
+
+getMovie = () => {
+  request.open(
+    "GET",
+    "https://api.themoviedb.org/3/movie/popular?api_key=76177c7fb779da86955a3e56aab3bcec&language=en-US&page=" +
+      page,
+    true
+  );
+  request.onload = function() {
+    var data = JSON.parse(this.response);
+    // console.log(data);
+    document.getElementById("pages").innerHTML =
+      "Page " +
+      page +
+      "/ " +
+      data.total_pages +
+      " of Total Results " +
+      data.total_results;
+    document.getElementById("main").style.display = "block";
+
+    if (request.status >= 200 && request.status < 400) {
+      document.getElementById("popUp").style.display = "none";
+      document.getElementById("likedMovies").style.display = "none";
+
+      const app = document.getElementById("movieContainer");
+
+      movies = data.results;
+      document.getElementById("movieListTitle").style.textDecoration =
+        "underline red";
+
+      for (let movie in movies) {
+        let eachMovie = movies[movie];
+
+        // console.log(eachMovie);
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.style.width = "17%";
+        card.style.display = "flex";
+        card.style.flexDirection = "column";
+        card.style.margin = "0px 10px";
+        card.id = eachMovie.id;
+        // console.log(eachMovie.id);
+
+        app.appendChild(card);
+
+        let img = document.createElement("img");
+        img.className = "img";
+        img.src = IMG_URL + eachMovie.poster_path;
+        img.style.textAlign = "center";
+        img.style.alignItems = "center";
+        img.style.alignContent = "center";
+        img.style.width = "100%";
+        card.appendChild(img);
+
+        img.onclick = () => {
+          showInfo(eachMovie);
+        };
+
+        let like = document.createElement("div");
+        like.id = "like";
+        like.innerHTML = "like";
+        card.appendChild(like);
+
+        like.onclick = () => {
+          // check whether the liked list has contain this movie
+          if (!likedMovie.includes(eachMovie.title)) {
+            likedMovie.push(eachMovie.title);
+            getLike(card.cloneNode(true));
+          }
+          console.log(likedMovie);
+          document.getElementById("number").innerHTML = likedMovie.length;
+        };
+
+        // console.log(likedMovie);
+        let title = document.createElement("h4");
+        title.innerHTML = eachMovie.title;
+        title.style.textAlign = "center";
+        title.style.width = "100%";
+        title.style.height = "20px";
+        title.style.overflow = "auto";
+        card.appendChild(title);
+
+        let date = document.createElement("P");
+        date.innerHTML = eachMovie.release_date;
+        card.appendChild(date);
+        // let date2 = date.cloneNode(true);
+        document.getElementById("config").onclick = () => {
+          configClick(likedMovie, eachMovie);
+        };
+      }
+    } else {
+      console.log("error");
+    }
+  };
+  request.send();
+};
+
+getMovie();
+
+showInfo = eachMovie => {
+  console.log(eachMovie);
+  // console.log(IMG_URL + eachMovie.poster_path);
+  const app1 = document.getElementById("popUp");
+  const app = document.getElementById("main");
+
+  // app.style.opacity = "0.5";
+
+  app1.style.display = "block";
+
+  const close = document.createElement("div");
+  close.id = "close";
+  close.style.position = "fixed";
+  close.innerHTML = "CLOSE";
+
+  close.onclick = () => {
+    movieBlock.parentNode.removeChild(movieBlock);
+    close.innerHTML = "";
+  };
+  app1.appendChild(close);
+
+  backdrop_img = IMG_URL + eachMovie.backdrop_path;
+
+  const movieBlock = document.createElement("div");
+  movieBlock.id = "movieBlock";
+  movieBlock.style.position = "fixed";
+  movieBlock.style.top = "15%";
+  movieBlock.style.display = "flex";
+  movieBlock.style.flexDirection = "column";
+  movieBlock.style.alignItems = "center";
+  movieBlock.style.flexWrap = "wrap";
+  movieBlock.style.width = "60%";
+  movieBlock.style.height = "auto";
+
+  app1.appendChild(movieBlock);
+
+  const background = document.createElement("div");
+  background.id = "background";
+  background.style.width = "120%";
+  background.style.minHeight = "70vh";
+  background.style.backgroundSize = "cover";
+  background.style.display = "flex";
+  background.style.flexDirection = "row";
+  background.style.justifyContent = "flex-start";
+  background.style.alignContent = "center";
+  background.style.backgroundImage = "url(" + backdrop_img + ")";
+  background.style.backgroundRepeat = "no-repeat";
+  movieBlock.appendChild(background);
+
+  //   const movieImg = document.createElement("div");
+  let img = document.createElement("img");
+  img.className = "img";
+  img.src = IMG_URL + eachMovie.poster_path;
+  img.style.height = "328px";
+  img.style.width = "auto";
+  //   img.style.margin = "60px 50px";
+
+  background.appendChild(img);
+
+  const movieInfo = document.createElement("div");
+  movieInfo.id = "movieInfo";
+  background.appendChild(movieInfo);
+
+  let title = document.createElement("h3");
+  title.id = "title";
+  let year = eachMovie.release_date.substring(0, 4);
+  title.innerHTML = eachMovie.title + "(" + year + ")";
+  movieInfo.appendChild(title);
+
+  const categories = document.createElement("div");
+  categories.id = "categories";
+  categories.style.height = "50px";
+  movieInfo.appendChild(categories);
+
+  let OverView = document.createElement("p");
+  OverView.id = "OverView";
+  OverView.innerHTML = eachMovie.overview;
+  movieInfo.appendChild(OverView);
+
+  const company = document.createElement("div");
+  company.id = "company";
+  movieInfo.appendChild(company);
+
+  let genres = eachMovie.genre_ids;
+  // console.log(genres);
+
+  genres.forEach((genreid, index) => {
+    let genre_div = document.createElement("div");
+    genre_div.style.margin = "10px";
+    genre_div.style.padding = "5px 10px";
+    genre_div.style.borderRadius = "10px";
+    genre_div.style.display = "inline-block";
+
+    let color = genre_color[genreid.toString()];
+    genre_div.style.backgroundColor = color;
+
+    genre_div.id = "genre" + index;
+    genreName = genre_map[genreid.toString()];
+    genre_div.innerHTML = genreName;
+    categories.append(genre_div);
+
+    //console.log(cur_movie.id);
+  });
+
+  let details_url =
+    "https://api.themoviedb.org/3/movie/" +
+    eachMovie.id +
+    "?api_key=" +
+    API_KEY +
+    "&language=en-US";
+
+  getProduction(details_url, company);
+};
+
+getProduction = (url, productions) => {
+  request.open("GET", url, true);
+  request.onload = function() {
+    const data = JSON.parse(this.response);
+    if (request.status >= 200 && request.status < 400) {
+      pros = data.production_companies;
+      pros.forEach(function(pro, index) {
+        //console.log(pro);
+
+        if (pro.logo_path) {
+          company_url = IMG_URL + pro.logo_path;
+          //console.log(company_url);
+
+          let img = document.createElement("img");
+          img.id = "companyImg" + index;
+          img.src = company_url;
+          img.style.minHeight = "20px";
+          img.style.maxHeight = "50px";
+          img.style.minWidth = "auto";
+          img.style.maxWidth = "auto";
+          img.style.padding = "0 5px";
+          img.style.display = "inline-block";
+          productions.appendChild(img);
+        } else {
+          let pro_div = document.createElement("p");
+          pro_div.id = "company" + index;
+          pro_div.style.padding = "0px 5px";
+          pro_div.style.alignContent = "center";
+          pro_div.style.alignItems = "center";
+          //console.log(pro.name);
+          pro_div.innerHTML = pro.name;
+          productions.appendChild(pro_div);
+        }
+      });
+    } else {
+      console.log("error");
+    }
+  };
+  request.send();
+};
+
+getLike = div => {
+  document.getElementById("likedMovieContainer").appendChild(div);
+};
+
+showMovie = () => {
+  document.getElementById("popularMovies").style.display = "block";
+  document.getElementById("likedMovies").style.display = "none";
+  document.getElementById("likedMoviesTitle").style.textDecoration = "none";
+  document.getElementById("movieListTitle").style.textDecoration =
+    "underline red";
+  document.getElementById("config").style.display = "none";
+};
+
+showLiked = () => {
+  document.getElementById("popularMovies").style.display = "none";
+  document.getElementById("likedMovies").style.display = "block";
+  document.getElementById("movieListTitle").style.textDecoration = "none";
+  document.getElementById("likedMoviesTitle").style.textDecoration =
+    "underline red";
+  document.getElementById("config").style.display = "block";
+};
+
+configClick = (likedMovie, eachMovie) => {
+  document.getElementById("main").style.display = "none";
+  let drag = document.getElementById("configPage");
+  drag.style.display = "block";
+
+  const closeConifg = document.createElement("div");
+  closeConifg.position = "absolute";
+  closeConifg.className = "closeConifg";
+  closeConifg.innerHTML = "CLOSE";
+
+  closeConifg.onclick = () => {
+    document.getElementById("main").style.display = "block";
+
+    drag.style.display = "none";
+    closeConifg.remove();
+    conifgMovies.remove();
+    showLiked();
+
+    // document.getElementById("close-icon").onclick = () => {
+    //   let cc = document.getElementById("config_tags").children;
+    //   let lc = document.getElementById("div_liked").children;
+    //   let moviesArray = [];
+    //   let lc_array = [];
+    //   for (i = 0; i < cc.length; i++) {
+    //     moviesArray.push(cc[i].innerHTML);
+    //   }
+    //   lc_array.length = moviesArray.length;
+    //   //console.log(lc_array.length);
+    //   for (i = 0; i < lc.length; i++) {
+    //     for (j = 0; j < moviesArray.length; j++) {
+    //       if (lc[i].textContent.includes(moviesArray[j])) {
+    //         //console.log(lc[i].innerHTML + ", index: " + j);
+    //         lc_array[j] = lc[i].innerHTML;
+    //       }
+    //     }
+    //   }
+    //   //console.log(moviesArray);
+    //   //console.log(lc_array);
+
+    //   document.getElementById("div_liked").innerHTML = "";
+    //   for (let index in lc_array) {
+    //     console.log(lc_array[index]);
+    //     let movie_div = document.createElement("div");
+    //     movie_div.className = "liked_movie";
+    //     movie_div.style.display = "flex";
+    //     movie_div.style.flexDirection = "column";
+    //     movie_div.style.alignItems = "center";
+    //     movie_div.style.flexWrap = "wrap";
+    //     movie_div.style.width = "20%";
+    //     movie_div.innerHTML = lc_array[index];
+    //     console.log(movie_div);
+    //     document.getElementById("div_liked").appendChild(movie_div);
+    //   }
+
+    //   document.getElementById("info").style.display = "";
+    //   document.getElementById("config_tags").style.display = "none";
+    //   document.getElementById("close-icon").style.display = "none";
+    // };
+  };
+  drag.appendChild(closeConifg);
+
+  const conifgMovies = document.createElement("div");
+  conifgMovies.id = "conifgMovies";
+  drag.appendChild(conifgMovies);
+
+  // for (let name in likedMovie) {
+  //   conifgMovies.append(name);
+  // }
+
+  console.log(likedMovie);
+
+  likedMovie.map((title, index) => {
+    const name = document.createElement("div");
+    name.id = index;
+    name.className = "name";
+    name.innerHTML = title;
+    conifgMovies.appendChild(name);
+    console.log(name);
+  });
+
+  Sortable.create(conifgMovies, {
+    swap: true,
+    swapClass: "highlight",
+    animation: 150
+  });
+};
