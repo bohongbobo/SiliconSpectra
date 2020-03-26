@@ -230,7 +230,7 @@ showInfo = eachMovie => {
   let img = document.createElement("img");
   img.className = "img";
   img.src = IMG_URL + eachMovie.poster_path;
-  img.style.height = "328px";
+  img.style.height = "45vh";
   img.style.width = "auto";
   //   img.style.margin = "60px 50px";
 
