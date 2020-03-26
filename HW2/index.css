@@ -82,13 +82,19 @@ h2 {
 #likedMovieContainer {
   display: flex;
   flex-wrap: wrap;
-  margin: 0;
-  justify-content: start;
+  margin: 0 10%;
+  /* padding: 0 3%; */
+  /* justify-content: start; */
 }
 
 #likedMovieContainer #like {
   display: none;
 }
+
+/* #likedMovieContainer .img {
+  display: none;
+} */
+
 .movieBlock:after {
   content: "";
   opacity: 0.9;
@@ -105,16 +111,22 @@ h2 {
 }
 
 #close {
-  display: block;
+  /* display: block; */
   font-size: large;
-  padding-top: 6%;
-  padding-left: 74%;
-  cursor: pointer;
-  /* position: absolute; */
+  top: 10%;
+  left: 80%;
+  /* cursor: pointer; */
+  /* cursor: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/meh.png"),
+    pointer; */
+  cursor: url(./face.svg), pointer;
+  position: fixed;
+  z-index: 10;
 }
 
-#popUp {
+/* #popUp {
   z-index: 10;
+  background: black;
+  background-size: cover;
 }
 
 #middleLayer {
@@ -122,7 +134,7 @@ h2 {
   background-color: black;
   width: 100%;
   height: 100%;
-}
+} */
 
 #main {
   z-index: -10;
@@ -230,6 +242,7 @@ h2 {
 .closeConifg {
   display: block;
   font-size: large;
+  top: 0;
   margin-top: 6%;
   margin-left: 74%;
   cursor: pointer;

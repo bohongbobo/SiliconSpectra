@@ -137,7 +137,7 @@ getMovie = () => {
             likedMovie.push(eachMovie.title);
             getLike(card.cloneNode(true));
           }
-          console.log(likedMovie);
+          // console.log(likedMovie);
           document.getElementById("number").innerHTML = likedMovie.length;
         };
 
@@ -168,25 +168,35 @@ getMovie = () => {
 getMovie();
 
 showInfo = eachMovie => {
-  console.log(eachMovie);
+  // console.log(eachMovie);
   // console.log(IMG_URL + eachMovie.poster_path);
   const app1 = document.getElementById("popUp");
   const app = document.getElementById("main");
 
-  // app.style.opacity = "0.5";
-
+  app.style.opacity = "0.3";
+  // app.style.display = "none ";
   app1.style.display = "block";
+  // app1.style.background = "none";
 
   const close = document.createElement("div");
   close.id = "close";
-  close.style.position = "fixed";
-  close.innerHTML = "CLOSE";
+  close.style.cursor =
+    // "url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/meh.png'), pointer";
+    close.innerHTML = "CLOSE";
 
   close.onclick = () => {
     movieBlock.parentNode.removeChild(movieBlock);
+    close.parentNode.removeChild(close);
+
+    app.style.opacity = "1";
+
     close.innerHTML = "";
   };
   app1.appendChild(close);
+
+  // const icon = document.createElement("i");
+  // icon.className = "fas fa-flushed";
+  // close.appendChild(icon);
 
   backdrop_img = IMG_URL + eachMovie.backdrop_path;
 
@@ -324,6 +334,7 @@ getProduction = (url, productions) => {
 
 getLike = div => {
   document.getElementById("likedMovieContainer").appendChild(div);
+  // console.log(div);
 };
 
 showMovie = () => {
@@ -361,47 +372,6 @@ configClick = (likedMovie, eachMovie) => {
     closeConifg.remove();
     conifgMovies.remove();
     showLiked();
-
-    // document.getElementById("close-icon").onclick = () => {
-    //   let cc = document.getElementById("config_tags").children;
-    //   let lc = document.getElementById("div_liked").children;
-    //   let moviesArray = [];
-    //   let lc_array = [];
-    //   for (i = 0; i < cc.length; i++) {
-    //     moviesArray.push(cc[i].innerHTML);
-    //   }
-    //   lc_array.length = moviesArray.length;
-    //   //console.log(lc_array.length);
-    //   for (i = 0; i < lc.length; i++) {
-    //     for (j = 0; j < moviesArray.length; j++) {
-    //       if (lc[i].textContent.includes(moviesArray[j])) {
-    //         //console.log(lc[i].innerHTML + ", index: " + j);
-    //         lc_array[j] = lc[i].innerHTML;
-    //       }
-    //     }
-    //   }
-    //   //console.log(moviesArray);
-    //   //console.log(lc_array);
-
-    //   document.getElementById("div_liked").innerHTML = "";
-    //   for (let index in lc_array) {
-    //     console.log(lc_array[index]);
-    //     let movie_div = document.createElement("div");
-    //     movie_div.className = "liked_movie";
-    //     movie_div.style.display = "flex";
-    //     movie_div.style.flexDirection = "column";
-    //     movie_div.style.alignItems = "center";
-    //     movie_div.style.flexWrap = "wrap";
-    //     movie_div.style.width = "20%";
-    //     movie_div.innerHTML = lc_array[index];
-    //     console.log(movie_div);
-    //     document.getElementById("div_liked").appendChild(movie_div);
-    //   }
-
-    //   document.getElementById("info").style.display = "";
-    //   document.getElementById("config_tags").style.display = "none";
-    //   document.getElementById("close-icon").style.display = "none";
-    // };
   };
   drag.appendChild(closeConifg);
 
@@ -413,7 +383,7 @@ configClick = (likedMovie, eachMovie) => {
   //   conifgMovies.append(name);
   // }
 
-  console.log(likedMovie);
+  // console.log(likedMovie);
 
   likedMovie.map((title, index) => {
     const name = document.createElement("div");
@@ -421,12 +391,14 @@ configClick = (likedMovie, eachMovie) => {
     name.className = "name";
     name.innerHTML = title;
     conifgMovies.appendChild(name);
-    console.log(name);
+    // console.log(name.id);
   });
+  console.log(conifgMovies);
 
   Sortable.create(conifgMovies, {
     swap: true,
     swapClass: "highlight",
     animation: 150
   });
+  // console.log(conifgMovies);
 };
