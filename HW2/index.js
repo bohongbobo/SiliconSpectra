@@ -90,6 +90,7 @@ getMovie = () => {
     if (request.status >= 200 && request.status < 400) {
       document.getElementById("popUp").style.display = "none";
       document.getElementById("likedMovies").style.display = "none";
+      document.getElementById("likedMovieContainer").style.display = "none";
 
       const app = document.getElementById("movieContainer");
 
@@ -340,6 +341,7 @@ getLike = div => {
 showMovie = () => {
   document.getElementById("popularMovies").style.display = "block";
   document.getElementById("likedMovies").style.display = "none";
+  document.getElementById("likedMovieContainer").style.display = "none";
   document.getElementById("likedMoviesTitle").style.textDecoration = "none";
   document.getElementById("movieListTitle").style.textDecoration =
     "underline red";
@@ -349,53 +351,71 @@ showMovie = () => {
 showLiked = () => {
   document.getElementById("popularMovies").style.display = "none";
   document.getElementById("likedMovies").style.display = "block";
+  document.getElementById("likedMovieContainer").style.display = "flex";
+
   document.getElementById("movieListTitle").style.textDecoration = "none";
   document.getElementById("likedMoviesTitle").style.textDecoration =
     "underline red";
   document.getElementById("config").style.display = "block";
+  
+  Sortable.create(likedMovieContainer, {
+    swap: true,
+    swapClass: "highlight",
+    animation: 150
+  });
+
+
+
 };
 
 configClick = (likedMovie, eachMovie) => {
+  
   document.getElementById("main").style.display = "none";
-  let drag = document.getElementById("configPage");
-  drag.style.display = "block";
+  let likedMovieContainer = document.getElementById("likedMovieContainer");
+  likedMovieContainer.style.display = "flex";
+  likedMovieContainer.style.marginTop="10%";
+
+
 
   const closeConifg = document.createElement("div");
-  closeConifg.position = "absolute";
   closeConifg.className = "closeConifg";
   closeConifg.innerHTML = "CLOSE";
 
+  // let img = document.getElementsByClassName("img");
+  // img.style.display="none"
+
   closeConifg.onclick = () => {
     document.getElementById("main").style.display = "block";
+    likedMovieContainer.style.display="flex";
+    likedMovieContainer.style.flexDirection="row";
+    likedMovieContainer.style.marginTop="0";
 
-    drag.style.display = "none";
+    // img.style.display="block"
+    // likedMovieContainer.style.display = "none";
     closeConifg.remove();
-    conifgMovies.remove();
+    // conifgMovies.remove();
     showLiked();
   };
-  drag.appendChild(closeConifg);
+  likedMovieContainer.appendChild(closeConifg);
 
-  const conifgMovies = document.createElement("div");
-  conifgMovies.id = "conifgMovies";
-  drag.appendChild(conifgMovies);
+  // const conifgMovies = document.createElement("div");
+  // conifgMovies.id = "conifgMovies";
+  // likedMovieContainer.appendChild(conifgMovies);
 
-  // for (let name in likedMovie) {
-  //   conifgMovies.append(name);
-  // }
 
+  // likedMovie.map((title, index) => {
+  //   const name = document.createElement("div");
+  //   name.id = index;
+  //   name.className = "name";
+  //   name.innerHTML = title;
+  //   likedMovieContainer.appendChild(name);
+  //   console.log(name);
+  // });
+  console.log(likedMovieContainer);
   // console.log(likedMovie);
 
-  likedMovie.map((title, index) => {
-    const name = document.createElement("div");
-    name.id = index;
-    name.className = "name";
-    name.innerHTML = title;
-    conifgMovies.appendChild(name);
-    // console.log(name.id);
-  });
-  console.log(conifgMovies);
 
-  Sortable.create(conifgMovies, {
+  Sortable.create(likedMovieContainer, {
     swap: true,
     swapClass: "highlight",
     animation: 150

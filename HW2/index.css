@@ -80,7 +80,8 @@ h2 {
 }
 
 #likedMovieContainer {
-  display: flex;
+  /* display: flex; */
+  flex-direction: row;
   flex-wrap: wrap;
   margin: 0 10%;
   /* padding: 0 3%; */
@@ -229,7 +230,7 @@ h2 {
     0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
-.name {
+/* .name {
   display: flex;
   flex-direction: column;
   width: 80%;
@@ -237,13 +238,13 @@ h2 {
   font-size: larger;
   margin: 20px;
   padding: 20px;
-}
+} */
 
 .closeConifg {
+  position: absolute;
   display: block;
   font-size: large;
   top: 0;
-  margin-top: 6%;
   margin-left: 74%;
   cursor: pointer;
 }
