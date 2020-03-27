@@ -6,6 +6,12 @@ const likedMovie = [];
 document.getElementById("config").style.display = "none";
 document.getElementById("configPage").style.display = "none";
 
+$(window).load(function() {
+  $(".loader").fadeOut("slow");
+});
+
+
+
 const genre_map = {
   "28": "Action",
   "12": "Adventure",
@@ -114,6 +120,8 @@ getMovie = () => {
 
         app.appendChild(card);
 
+        
+
         let img = document.createElement("img");
         img.className = "img";
         img.src = IMG_URL + eachMovie.poster_path;
@@ -165,8 +173,7 @@ getMovie = () => {
   };
   request.send();
 };
-
-getMovie();
+document.addEventListener('DOMContentLoaded', getMovie());
 
 showInfo = eachMovie => {
   // console.log(eachMovie);
@@ -174,6 +181,8 @@ showInfo = eachMovie => {
   const app1 = document.getElementById("popUp");
   const app = document.getElementById("main");
 
+
+  
   app.style.opacity = "0.3";
   // app.style.display = "none ";
   app1.style.display = "block";
@@ -190,7 +199,6 @@ showInfo = eachMovie => {
     close.parentNode.removeChild(close);
 
     app.style.opacity = "1";
-
     close.innerHTML = "";
   };
   app1.appendChild(close);
@@ -363,9 +371,6 @@ showLiked = () => {
     swapClass: "highlight",
     animation: 150
   });
-
-
-
 };
 
 configClick = (likedMovie, eachMovie) => {
