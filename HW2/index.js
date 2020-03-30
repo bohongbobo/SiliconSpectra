@@ -138,8 +138,12 @@ getMovie = () => {
 
         let like = document.createElement("div");
         like.id = "like";
-        like.innerHTML = "like";
         card.appendChild(like);
+
+        let innerLike = document.createElement("div");
+        innerLike.id = "innerLike";
+        innerLike.innerHTML = "like";
+        like.appendChild(innerLike);
 
         like.onclick = () => {
           // check whether the liked list has contain this movie
@@ -186,6 +190,7 @@ showInfo = eachMovie => {
   const app = document.getElementById("main");
 
 
+  app.style.pointerEvents = "none";
 
   app.style.opacity = "0.3";
   // app.style.display = "none ";
@@ -203,7 +208,10 @@ showInfo = eachMovie => {
     close.parentNode.removeChild(close);
 
     app.style.opacity = "1";
-    close.innerHTML = "";
+    // close.innerHTML = "";
+    app.style.pointerEvents = "auto";
+
+
   };
   app1.appendChild(close);
 
@@ -368,7 +376,7 @@ showLiked = () => {
   document.getElementById("movieListTitle").style.textDecoration = "none";
   document.getElementById("likedMoviesTitle").style.textDecoration =
     "underline red";
-  document.getElementById("config").style.display = "block";
+  document.getElementById("config").style.display = "none";
 
   Sortable.create(likedMovieContainer, {
     swap: true,
@@ -377,58 +385,16 @@ showLiked = () => {
   });
 };
 
-// configClick = (likedMovie, eachMovie) => {
-
-//   document.getElementById("main").style.display = "none";
-//   let likedMovieContainer = document.getElementById("likedMovieContainer");
-//   likedMovieContainer.style.display = "flex";
-//   likedMovieContainer.style.marginTop="10%";
-
-//   const closeConifg = document.createElement("div");
-//   closeConifg.className = "closeConifg";
-//   closeConifg.innerHTML = "CLOSE";
-
-//   closeConifg.onclick = () => {
-//     document.getElementById("main").style.display = "block";
-//     likedMovieContainer.style.display="flex";
-//     likedMovieContainer.style.flexDirection="row";
-//     likedMovieContainer.style.marginTop="0";
-
-//     closeConifg.remove();
-//     showLiked();
-//   };
-//   likedMovieContainer.appendChild(closeConifg);
-
-//   console.log(likedMovieContainer);
-
-//   Sortable.create(likedMovieContainer, {
-//     swap: true,
-//     swapClass: "highlight",
-//     animation: 150
-//   });
-// };
-
-
-configClick = (likedMovie, eachMovie, card) => {
-  console.log(likedMovie);
-  // console.log(movies);
-
+configClick = (likedMovie, eachMovie) => {
 
   document.getElementById("main").style.display = "none";
   let likedMovieContainer = document.getElementById("likedMovieContainer");
-  likedMovieContainer.style.display = "none";
-  // likedMovieContainer.style.marginTop="10%";
-
-  let configPage = document.getElementById("configPage");
-  configPage.style.display = "flex";
-  configPage.style.flexDirection = "column";
+  likedMovieContainer.style.display = "flex";
+  likedMovieContainer.style.marginTop = "10%";
 
   const closeConifg = document.createElement("div");
-  closeConifg.className = "closeConifg";
+  closeConifg.id = "closeConifg";
   closeConifg.innerHTML = "CLOSE";
-
-  // let img = document.getElementsByClassName("img");
-  // img.style.display="none"
 
   closeConifg.onclick = () => {
     document.getElementById("main").style.display = "block";
@@ -436,48 +402,69 @@ configClick = (likedMovie, eachMovie, card) => {
     likedMovieContainer.style.flexDirection = "row";
     likedMovieContainer.style.marginTop = "0";
 
-    // img.style.display="block"
-    // likedMovieContainer.style.display = "none";
     closeConifg.remove();
-    conifgMovies.remove();
-    likedMovieContainer.innerHTML = "";
-    if (!likedMovie.includes(eachMovie.title)) {
-      console.log("haha");
-      likedMovie.splice(0, 0, eachMovie.title);
-      getLike(card.cloneNode(true));
-    }
     showLiked();
   };
-  configPage.appendChild(closeConifg);
-
-  const conifgMovies = document.createElement("div");
-  conifgMovies.id = "conifgMovies";
-  conifgMovies.style.top = "10%";
-  conifgMovies.style.width = "60%";
-  conifgMovies.style.textAlign = "center";
-
-  configPage.appendChild(conifgMovies);
+  likedMovieContainer.appendChild(closeConifg);
 
 
-  likedMovie.map((title, index) => {
-    const name = document.createElement("div");
-    name.id = index;
-    name.className = "name";
-    name.innerHTML = title;
-    name.style.margin = "20px"
-    name.style.background = "lightblue";
-    name.style.padding = "20px";
-    conifgMovies.appendChild(name);
-    // console.log(name);
-  });
-  // console.log(conifgMovies);
-  // console.log(likedMovie);
-
-
-  Sortable.create(conifgMovies, {
+  Sortable.create(likedMovieContainer, {
     swap: true,
     swapClass: "highlight",
     animation: 150
   });
-  // console.log(conifgMovies);
 };
+
+
+// configClick = (likedMovie, eachMovie, card) => {
+
+//   document.getElementById("main").style.display = "none";
+//   let likedMovieContainer = document.getElementById("likedMovieContainer");
+//   likedMovieContainer.style.display = "none";
+
+//   let configPage = document.getElementById("configPage");
+//   configPage.style.display = "flex";
+//   configPage.style.flexDirection = "column";
+//   configPage.style.padding = "10%"
+
+//   const closeConifg = document.createElement("div");
+//   closeConifg.id = "closeConifg";
+//   closeConifg.innerHTML = "CLOSE";
+
+//   closeConifg.onclick = () => {
+
+//     document.getElementById("main").style.display = "block";
+//     likedMovieContainer.style.display = "flex";
+//     likedMovieContainer.style.flexDirection = "row";
+//     likedMovieContainer.style.marginTop = "0";
+
+//     closeConifg.remove();
+//     conifgMovies.remove();
+//   };
+//   configPage.appendChild(closeConifg);
+
+//   const conifgMovies = document.createElement("div");
+//   conifgMovies.id = "conifgMovies";
+//   conifgMovies.style.top = "10%";
+//   conifgMovies.style.width = "100%";
+//   conifgMovies.style.textAlign = "center";
+
+//   configPage.appendChild(conifgMovies);
+
+//   likedMovie.map((title, index) => {
+//     const name = document.createElement("div");
+//     name.id = index;
+//     name.className = "name";
+//     name.innerHTML = title;
+//     name.style.margin = "20px"
+//     name.style.background = "lightblue";
+//     name.style.padding = "20px";
+//     conifgMovies.appendChild(name);
+//   });
+
+//   Sortable.create(conifgMovies, {
+//     swap: true,
+//     swapClass: "highlight",
+//     animation: 150
+//   });
+// };
