@@ -6,7 +6,7 @@ const likedMovie = [];
 document.getElementById("config").style.display = "none";
 document.getElementById("configPage").style.display = "none";
 
-$(window).load(function() {
+$(window).load(function () {
   $(".loader").fadeOut("slow");
 });
 
@@ -78,10 +78,10 @@ getMovie = () => {
   request.open(
     "GET",
     "https://api.themoviedb.org/3/movie/popular?api_key=76177c7fb779da86955a3e56aab3bcec&language=en-US&page=" +
-      page,
+    page,
     true
   );
-  request.onload = function() {
+  request.onload = function () {
     var data = JSON.parse(this.response);
     // console.log(data);
     document.getElementById("pages").innerHTML =
@@ -103,11 +103,11 @@ getMovie = () => {
       movies = data.results;
       document.getElementById("movieListTitle").style.textDecoration =
         "underline red";
+      // console.log(movies);
 
       for (let movie in movies) {
         let eachMovie = movies[movie];
 
-        // console.log(eachMovie);
         const card = document.createElement("div");
         card.className = "card";
 
@@ -120,10 +120,11 @@ getMovie = () => {
 
         app.appendChild(card);
 
-        
+
 
         let img = document.createElement("img");
         img.className = "img";
+        // img.id = eachMovie.id;
         img.src = IMG_URL + eachMovie.poster_path;
         img.style.textAlign = "center";
         img.style.alignItems = "center";
@@ -163,10 +164,13 @@ getMovie = () => {
         date.innerHTML = eachMovie.release_date;
         card.appendChild(date);
         // let date2 = date.cloneNode(true);
+
         document.getElementById("config").onclick = () => {
-          configClick(likedMovie, eachMovie);
+          configClick(likedMovie, eachMovie, card);
         };
+
       }
+
     } else {
       console.log("error");
     }
@@ -182,7 +186,7 @@ showInfo = eachMovie => {
   const app = document.getElementById("main");
 
 
-  
+
   app.style.opacity = "0.3";
   // app.style.display = "none ";
   app1.style.display = "block";
@@ -302,11 +306,11 @@ showInfo = eachMovie => {
 
 getProduction = (url, productions) => {
   request.open("GET", url, true);
-  request.onload = function() {
+  request.onload = function () {
     const data = JSON.parse(this.response);
     if (request.status >= 200 && request.status < 400) {
       pros = data.production_companies;
-      pros.forEach(function(pro, index) {
+      pros.forEach(function (pro, index) {
         //console.log(pro);
 
         if (pro.logo_path) {
@@ -365,7 +369,7 @@ showLiked = () => {
   document.getElementById("likedMoviesTitle").style.textDecoration =
     "underline red";
   document.getElementById("config").style.display = "block";
-  
+
   Sortable.create(likedMovieContainer, {
     swap: true,
     swapClass: "highlight",
@@ -373,14 +377,51 @@ showLiked = () => {
   });
 };
 
-configClick = (likedMovie, eachMovie) => {
-  
+// configClick = (likedMovie, eachMovie) => {
+
+//   document.getElementById("main").style.display = "none";
+//   let likedMovieContainer = document.getElementById("likedMovieContainer");
+//   likedMovieContainer.style.display = "flex";
+//   likedMovieContainer.style.marginTop="10%";
+
+//   const closeConifg = document.createElement("div");
+//   closeConifg.className = "closeConifg";
+//   closeConifg.innerHTML = "CLOSE";
+
+//   closeConifg.onclick = () => {
+//     document.getElementById("main").style.display = "block";
+//     likedMovieContainer.style.display="flex";
+//     likedMovieContainer.style.flexDirection="row";
+//     likedMovieContainer.style.marginTop="0";
+
+//     closeConifg.remove();
+//     showLiked();
+//   };
+//   likedMovieContainer.appendChild(closeConifg);
+
+//   console.log(likedMovieContainer);
+
+//   Sortable.create(likedMovieContainer, {
+//     swap: true,
+//     swapClass: "highlight",
+//     animation: 150
+//   });
+// };
+
+
+configClick = (likedMovie, eachMovie, card) => {
+  console.log(likedMovie);
+  // console.log(movies);
+
+
   document.getElementById("main").style.display = "none";
   let likedMovieContainer = document.getElementById("likedMovieContainer");
-  likedMovieContainer.style.display = "flex";
-  likedMovieContainer.style.marginTop="10%";
+  likedMovieContainer.style.display = "none";
+  // likedMovieContainer.style.marginTop="10%";
 
-
+  let configPage = document.getElementById("configPage");
+  configPage.style.display = "flex";
+  configPage.style.flexDirection = "column";
 
   const closeConifg = document.createElement("div");
   closeConifg.className = "closeConifg";
@@ -391,36 +432,49 @@ configClick = (likedMovie, eachMovie) => {
 
   closeConifg.onclick = () => {
     document.getElementById("main").style.display = "block";
-    likedMovieContainer.style.display="flex";
-    likedMovieContainer.style.flexDirection="row";
-    likedMovieContainer.style.marginTop="0";
+    likedMovieContainer.style.display = "flex";
+    likedMovieContainer.style.flexDirection = "row";
+    likedMovieContainer.style.marginTop = "0";
 
     // img.style.display="block"
     // likedMovieContainer.style.display = "none";
     closeConifg.remove();
-    // conifgMovies.remove();
+    conifgMovies.remove();
+    likedMovieContainer.innerHTML = "";
+    if (!likedMovie.includes(eachMovie.title)) {
+      console.log("haha");
+      likedMovie.splice(0, 0, eachMovie.title);
+      getLike(card.cloneNode(true));
+    }
     showLiked();
   };
-  likedMovieContainer.appendChild(closeConifg);
+  configPage.appendChild(closeConifg);
 
-  // const conifgMovies = document.createElement("div");
-  // conifgMovies.id = "conifgMovies";
-  // likedMovieContainer.appendChild(conifgMovies);
+  const conifgMovies = document.createElement("div");
+  conifgMovies.id = "conifgMovies";
+  conifgMovies.style.top = "10%";
+  conifgMovies.style.width = "60%";
+  conifgMovies.style.textAlign = "center";
+
+  configPage.appendChild(conifgMovies);
 
 
-  // likedMovie.map((title, index) => {
-  //   const name = document.createElement("div");
-  //   name.id = index;
-  //   name.className = "name";
-  //   name.innerHTML = title;
-  //   likedMovieContainer.appendChild(name);
-  //   console.log(name);
-  // });
-  console.log(likedMovieContainer);
+  likedMovie.map((title, index) => {
+    const name = document.createElement("div");
+    name.id = index;
+    name.className = "name";
+    name.innerHTML = title;
+    name.style.margin = "20px"
+    name.style.background = "lightblue";
+    name.style.padding = "20px";
+    conifgMovies.appendChild(name);
+    // console.log(name);
+  });
+  // console.log(conifgMovies);
   // console.log(likedMovie);
 
 
-  Sortable.create(likedMovieContainer, {
+  Sortable.create(conifgMovies, {
     swap: true,
     swapClass: "highlight",
     animation: 150
