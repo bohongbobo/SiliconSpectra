@@ -3,6 +3,7 @@ import "./App.css";
 import Addtodos from "./components/Addtodos.js";
 import Todos from "./components/Todos.js";
 import Search from "./components/Search.js";
+import uuid from "react-uuid";
 
 class App extends Component {
   state = {
@@ -19,6 +20,9 @@ class App extends Component {
         content: "This is a test too!",
       },
     ],
+    id: uuid(),
+    content: "",
+    editItem: false,
   };
 
   addTodo = (todo) => {
@@ -39,11 +43,6 @@ class App extends Component {
     });
   };
 
-  // onSearchChange = event => {
-  //   this.setState({
-  //     searchField: event.target.value
-  //   });
-  // };
   onSearchChange = (event) => {
     this.setState({ searchField: event.target.value });
     // console.log(searchField);

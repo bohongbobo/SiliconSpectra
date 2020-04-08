@@ -1,11 +1,11 @@
-#content,
-#order {
-  border-bottom: none;
+/* .content, */
+.order {
+  /* border-bottom: none; */
   text-align: center;
-  font-size: larger;
+  /* font-size: larger; */
 }
 
-#order,
-#content:focus {
+/* .order,
+.content:focus {
   border-bottom: none;
-}
+} */

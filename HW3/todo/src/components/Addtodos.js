@@ -26,7 +26,7 @@ class Addtodos extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit} className="row">
-          <div className="col s12 m4 l10">
+          <div className="col s12 m8 l10">
             <label>Add new todo: </label>
             <input
               type="text"

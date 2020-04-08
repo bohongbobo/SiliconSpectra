@@ -7,19 +7,18 @@ const Todos = ({ todos, deleteTodo, setUpdate }) => {
       return (
         <div className="collection-item center row" key={todo.id}>
           <div>
-            <h5>
+            {/* <h5>
               <input
-                className="col s12 m4 l3"
-                id="order"
+                className="col s12 m4 l3 order"
                 type="text"
                 value={todo.order}
                 onChange={(e) => {
                   setUpdate(e.target.value);
                 }}
               />
-            </h5>
+            </h5> */}
             <h5
-              className="cyan-text col s12 m4 l7"
+              className="cyan-text col s12 m8 l10"
               onClick={() => {
                 deleteTodo(todo.id);
               }}
