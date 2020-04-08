@@ -3,20 +3,22 @@ import "./Addtodos.css";
 
 class Addtodos extends Component {
   state = {
-    content: ""
+    content: "",
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
-    this.props.addTodo(this.state);
-    this.setState({
-      content: ""
-    });
+    if (this.state.content !== "") {
+      this.props.addTodo(this.state);
+      this.setState({
+        content: "",
+      });
+    }
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
-      content: e.target.value
+      content: e.target.value,
     });
   };
 

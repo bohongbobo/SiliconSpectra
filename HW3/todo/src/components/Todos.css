@@ -1,0 +1,11 @@
+#content,
+#order {
+  border-bottom: none;
+  text-align: center;
+  font-size: larger;
+}
+
+#order,
+#content:focus {
+  border-bottom: none;
+}
