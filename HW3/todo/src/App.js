@@ -8,31 +8,45 @@ import uuid from "react-uuid";
 class App extends Component {
   state = {
     searchField: "",
-    todos: [
-      {
-        id: 1,
-        order: 1,
-        content: "This is a test",
-      },
-      {
-        id: 2,
-        order: 1,
-        content: "This is a test too!",
-      },
-    ],
+    todos: [],
     id: uuid(),
     content: "",
-    editItem: false,
+    editContent: false,
   };
 
   addTodo = (todo) => {
-    todo.id = Math.random();
-    console.log(todo.id);
+    todo.id = uuid();
     let todos = [...this.state.todos, todo];
     this.setState({
       todos,
     });
+    console.log(todo);
   };
+
+  // handleChange = (e) => {
+  //   this.setState({
+  //     content: e.target.value,
+  //   });
+  // };
+
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   if (this.state.content !== "") {
+  //     const newTodo = {
+  //       id: this.state.id,
+  //       content: this.state.content,
+  //     };
+
+  //     const updtaeTodos = [...this.state.todos, newTodo];
+  //     this.setState({
+  //       todos: updtaeTodos,
+  //       id: uuid(),
+  //       content: "",
+  //       editContent: false,
+  //     });
+  //   }
+  // };
 
   deleteTodo = (id) => {
     const todos = this.state.todos.filter((todo) => {

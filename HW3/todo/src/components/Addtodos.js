@@ -5,6 +5,11 @@ class Addtodos extends Component {
   state = {
     content: "",
   };
+  handleChange = (e) => {
+    this.setState({
+      content: e.target.value,
+    });
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -14,12 +19,6 @@ class Addtodos extends Component {
         content: "",
       });
     }
-  };
-
-  handleChange = (e) => {
-    this.setState({
-      content: e.target.value,
-    });
   };
 
   render() {
