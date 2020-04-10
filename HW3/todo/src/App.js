@@ -14,39 +14,39 @@ class App extends Component {
     editContent: false,
   };
 
-  addTodo = (todo) => {
-    todo.id = uuid();
-    let todos = [...this.state.todos, todo];
+  // addTodo = (todo) => {
+  //   todo.id = uuid();
+  //   let todos = [...this.state.todos, todo];
+  //   this.setState({
+  //     todos,
+  //   });
+  //   // console.log(todo);
+  // };
+
+  handleChange = (e) => {
     this.setState({
-      todos,
+      content: e.target.value,
     });
-    console.log(todo);
   };
 
-  // handleChange = (e) => {
-  //   this.setState({
-  //     content: e.target.value,
-  //   });
-  // };
+  handleSubmit = (e) => {
+    e.preventDefault();
 
-  // handleSubmit = (e) => {
-  //   e.preventDefault();
+    if (this.state.content !== "") {
+      const newTodo = {
+        id: this.state.id,
+        content: this.state.content,
+      };
 
-  //   if (this.state.content !== "") {
-  //     const newTodo = {
-  //       id: this.state.id,
-  //       content: this.state.content,
-  //     };
-
-  //     const updtaeTodos = [...this.state.todos, newTodo];
-  //     this.setState({
-  //       todos: updtaeTodos,
-  //       id: uuid(),
-  //       content: "",
-  //       editContent: false,
-  //     });
-  //   }
-  // };
+      const updtaeTodos = [...this.state.todos, newTodo];
+      this.setState({
+        todos: updtaeTodos,
+        id: uuid(),
+        content: "",
+        editContent: false,
+      });
+    }
+  };
 
   deleteTodo = (id) => {
     const todos = this.state.todos.filter((todo) => {
@@ -62,16 +62,20 @@ class App extends Component {
     // console.log(searchField);
   };
 
-  setUpdate = (order, id) => {
-    console.log(order);
-    // const todos = this.state.todos.map((todo) => {
-    //   console.log(todo.order);
+  handleEdit = (id) => {
+    if (this.state.content === "") {
+      const todos = this.state.todos.filter((todo) => {
+        return todo.id !== id;
+      });
+      const selectedContent = this.state.todos.find((item) => item.id === id);
 
-    //   return todo.id === id ? (todo.order = order) : todo;
-    // });
-    // this.setState({
-    //   todos,
-    // });
+      this.setState({
+        todos,
+        content: selectedContent.content,
+        editContent: true,
+        id: id,
+      });
+    }
   };
 
   render() {
@@ -82,9 +86,20 @@ class App extends Component {
     return (
       <div className="todo-app container">
         <h1 className="center cyan-text">TO DO LIST</h1>
-        <Addtodos addTodo={this.addTodo} />
+        {/* <Addtodos
+          addTodo={this.addTodo}
+          editContent={this.state.editContent}
+          content={this.state.content}
+        /> */}
+        <Addtodos
+          editContent={this.state.editContent}
+          content={this.state.content}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
+
         <Search searchChange={this.onSearchChange} />
-        <Todos todos={filteredTodos} deleteTodo={this.deleteTodo} setUpdate={this.setUpdate} />
+        <Todos todos={filteredTodos} deleteTodo={this.deleteTodo} handleEdit={this.handleEdit} />
       </div>
     );
   }

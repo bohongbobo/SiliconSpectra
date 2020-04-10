@@ -2,43 +2,46 @@ import React, { Component } from "react";
 import "./Addtodos.css";
 
 class Addtodos extends Component {
-  state = {
-    content: "",
-  };
-  handleChange = (e) => {
-    this.setState({
-      content: e.target.value,
-    });
-  };
+  // handleChange = (e) => {
+  //   this.setState({
+  //     content: e.target.value,
+  //   });
+  // };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    if (this.state.content !== "") {
-      this.props.addTodo(this.state);
-      this.setState({
-        content: "",
-      });
-    }
-  };
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (this.props.content !== "") {
+  //     this.props.addTodo(this.state);
+  //     this.setState({
+  //       content: "",
+  //     });
+  //   }
+  // };
 
   render() {
+    const { handleSubmit, handleChange, editContent } = this.props;
+
     return (
       <div>
-        <form onSubmit={this.handleSubmit} className="row">
+        <form onSubmit={handleSubmit} className="row">
           <div className="col s12 m8 l10">
             <label>Add new todo: </label>
             <input
               type="text"
               className="white-text"
-              onChange={this.handleChange}
-              value={this.state.content}
+              onChange={handleChange}
+              value={this.props.content}
             />
           </div>
           <button
-            className="col s12 m4 l2 waves-effect waves-light btn-large"
-            onSubmit={this.handleSubmit}
+            className={
+              editContent
+                ? "col s12 m4 l2 waves-effect waves-light btn-large green"
+                : "col s12 m4 l2 waves-effect waves-light btn-large "
+            }
+            onSubmit={handleSubmit}
           >
-            Add
+            {editContent ? "Done" : "add"}
           </button>
         </form>
       </div>

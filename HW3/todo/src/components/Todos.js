@@ -1,12 +1,12 @@
 import React from "react";
 import "./Todos.css";
 
-const Todos = ({ todos, deleteTodo, setUpdate }) => {
+const Todos = ({ todos, deleteTodo, handleEdit }) => {
   const todoList = todos.length ? (
     todos.map((todo) => {
       return (
         <div className="collection-item center row" key={todo.id}>
-          <div>
+          <div className="flex">
             {/* <h5>
               <input
                 className="col s12 m4 l3 order"
@@ -17,16 +17,17 @@ const Todos = ({ todos, deleteTodo, setUpdate }) => {
                 }}
               />
             </h5> */}
-            <h5
-              className="cyan-text col s12 m8 l10"
+            <h5 className="cyan-text col s12 m7 l7">{todo.content}</h5>
+            <button
+              className="col s12 m2 l2 waves-effect waves-light btn-large"
               onClick={() => {
-                deleteTodo(todo.id);
+                handleEdit(todo.id);
               }}
             >
-              {todo.content}
-            </h5>
+              Edit
+            </button>
             <button
-              className="col s12 m4 l2 waves-effect waves-light btn-large"
+              className="col s12 m2 l2 waves-effect waves-light btn-large"
               onClick={() => {
                 deleteTodo(todo.id);
               }}
