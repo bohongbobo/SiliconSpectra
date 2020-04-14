@@ -4,9 +4,9 @@ import Addtodos from "./components/Addtodos.js";
 import Todos from "./components/Todos.js";
 import Search from "./components/Search.js";
 import uuid from "react-uuid";
-import Nav from "./components/Nav.js";
-import Process from "./components/Process.js";
-import Done from "./components/Done.js";
+import Nav from "./components/with_Router/Nav.js";
+// import Process from "./components/with_Router/Process.js";
+// import Done from "./components/with_Router/Done.js";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends Component {
@@ -17,6 +17,7 @@ class App extends Component {
     content: "",
     editContent: false,
     compeleted: false,
+    todosToShow: "All",
   };
 
   // addTodo = (todo) => {
@@ -97,19 +98,34 @@ class App extends Component {
     });
   };
 
+  updateToShow = (tar) => {
+    this.setState({
+      todosToShow: tar,
+    });
+  };
+
   render() {
-    const filteredTodos = this.state.todos.filter((todo) => {
+    let todos = [];
+
+    if (this.state.todosToShow === "all") {
+      todos = this.state.todos;
+    } else if (this.state.todosToShow === "processing") {
+      todos = this.state.todos.filter((todo) => !todo.compeleted);
+    } else if (this.state.todosToShow === "done") {
+      todos = this.state.todos.filter((todo) => todo.compeleted);
+    }
+
+    const filteredTodos = todos.filter((todo) => {
+      return todo.content.toLowerCase().includes(this.state.searchField.toLowerCase());
+    });
+    const beforeFilteredTodos = this.state.todos.filter((todo) => {
       return todo.content.toLowerCase().includes(this.state.searchField.toLowerCase());
     });
 
     return (
       <div className="todo-app container">
         <h1 className="center cyan-text">TO DO LIST</h1>
-        {/* <Addtodos
-          addTodo={this.addTodo}
-          editContent={this.state.editContent}
-          content={this.state.content}
-        /> */}
+
         <Addtodos
           editContent={this.state.editContent}
           content={this.state.content}
@@ -117,10 +133,19 @@ class App extends Component {
           handleSubmit={this.handleSubmit}
         />
         <Search searchChange={this.onSearchChange} />
+        {/* with Router  */}
         <Router>
-          <Nav />
+          <Nav updateToShow={this.updateToShow} />
           <Switch>
-            <Route exact path="/">
+            <Route path="/all">
+              <Todos
+                todos={beforeFilteredTodos}
+                toggleCompelete={this.toggleCompelete}
+                deleteTodo={this.deleteTodo}
+                handleEdit={this.handleEdit}
+              />
+            </Route>
+            <Route path="/process">
               <Todos
                 todos={filteredTodos}
                 toggleCompelete={this.toggleCompelete}
@@ -128,19 +153,31 @@ class App extends Component {
                 handleEdit={this.handleEdit}
               />
             </Route>
-            <Route path="/process">
-              <Process
+            <Route path="/done">
+              <Todos
                 todos={filteredTodos}
                 toggleCompelete={this.toggleCompelete}
                 deleteTodo={this.deleteTodo}
                 handleEdit={this.handleEdit}
               />
             </Route>
-            <Route path="/done">
-              <Done />
-            </Route>
           </Switch>
         </Router>
+        <hr />
+        <h3>Without Router blow</h3>
+        {/* without Router */}
+        <div className="button">
+          <button onClick={() => this.updateToShow("all")}>All</button>
+          <button onClick={() => this.updateToShow("processing")}>Processing</button>
+          <button onClick={() => this.updateToShow("done")}>Done</button>
+        </div>
+
+        <Todos
+          todos={filteredTodos}
+          toggleCompelete={this.toggleCompelete}
+          deleteTodo={this.deleteTodo}
+          handleEdit={this.handleEdit}
+        />
         <div className="center cyan-text">
           You have {this.state.todos.filter((todo) => !todo.compeleted).length} todos left!
         </div>
