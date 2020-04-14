@@ -1,7 +1,7 @@
 import React from "react";
 import "./Todos.css";
 
-const Todos = ({ todos, deleteTodo, handleEdit, toggleCompelete }) => {
+const Process = ({ todos, deleteTodo, handleEdit, toggleCompelete }) => {
   const todoList = todos.length ? (
     todos.map((todo) => {
       return (
@@ -52,4 +52,4 @@ const Todos = ({ todos, deleteTodo, handleEdit, toggleCompelete }) => {
   return <div className="todos collection">{todoList}</div>;
 };
 
-export default Todos;
+export default Process;

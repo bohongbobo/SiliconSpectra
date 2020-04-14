@@ -4,6 +4,10 @@ import Addtodos from "./components/Addtodos.js";
 import Todos from "./components/Todos.js";
 import Search from "./components/Search.js";
 import uuid from "react-uuid";
+import Nav from "./components/Nav.js";
+import Process from "./components/Process.js";
+import Done from "./components/Done.js";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends Component {
   state = {
@@ -12,6 +16,7 @@ class App extends Component {
     id: uuid(),
     content: "",
     editContent: false,
+    compeleted: false,
   };
 
   // addTodo = (todo) => {
@@ -44,6 +49,7 @@ class App extends Component {
         id: uuid(),
         content: "",
         editContent: false,
+        compeleted: false,
       });
     }
   };
@@ -73,9 +79,22 @@ class App extends Component {
         todos,
         content: selectedContent.content,
         editContent: true,
+        compeleted: false,
         id: id,
       });
     }
+  };
+
+  toggleCompelete = (id) => {
+    this.setState({
+      todos: this.state.todos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, compeleted: !todo.compeleted };
+        } else {
+          return todo;
+        }
+      }),
+    });
   };
 
   render() {
@@ -97,9 +116,34 @@ class App extends Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
         />
-
         <Search searchChange={this.onSearchChange} />
-        <Todos todos={filteredTodos} deleteTodo={this.deleteTodo} handleEdit={this.handleEdit} />
+        <Router>
+          <Nav />
+          <Switch>
+            <Route exact path="/">
+              <Todos
+                todos={filteredTodos}
+                toggleCompelete={this.toggleCompelete}
+                deleteTodo={this.deleteTodo}
+                handleEdit={this.handleEdit}
+              />
+            </Route>
+            <Route path="/process">
+              <Process
+                todos={filteredTodos}
+                toggleCompelete={this.toggleCompelete}
+                deleteTodo={this.deleteTodo}
+                handleEdit={this.handleEdit}
+              />
+            </Route>
+            <Route path="/done">
+              <Done />
+            </Route>
+          </Switch>
+        </Router>
+        <div className="center cyan-text">
+          You have {this.state.todos.filter((todo) => !todo.compeleted).length} todos left!
+        </div>
       </div>
     );
   }
