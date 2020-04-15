@@ -12,48 +12,52 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 class App extends Component {
   state = {
     searchField: "",
-    todos: [],
+    todos: [{ id: "unique", content: "aodnainds" }],
+    // order: "",
     id: uuid(),
-    content: "",
+    // content: "",
     editContent: false,
     compeleted: false,
     todosToShow: "All",
   };
 
-  // addTodo = (todo) => {
-  //   todo.id = uuid();
-  //   let todos = [...this.state.todos, todo];
+  addTodo = (todo) => {
+    todo.id = uuid();
+    todo.order = 1;
+    let todos = [...this.state.todos, todo];
+    console.log(this.state.editContent);
+    this.setState({
+      todos,
+    });
+    // console.log(todo);
+  };
+
+  // handleChange = (e) => {
   //   this.setState({
-  //     todos,
+  //     content: e.target.value,
   //   });
-  //   // console.log(todo);
   // };
 
-  handleChange = (e) => {
-    this.setState({
-      content: e.target.value,
-    });
-  };
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  //   if (this.state.content !== "") {
+  //     const newTodo = {
+  //       order: this.state.order,
+  //       id: this.state.id,
+  //       content: this.state.content,
+  //     };
 
-    if (this.state.content !== "") {
-      const newTodo = {
-        id: this.state.id,
-        content: this.state.content,
-      };
-
-      const updtaeTodos = [...this.state.todos, newTodo];
-      this.setState({
-        todos: updtaeTodos,
-        id: uuid(),
-        content: "",
-        editContent: false,
-        compeleted: false,
-      });
-    }
-  };
+  //     const updtaeTodos = [...this.state.todos, newTodo];
+  //     this.setState({
+  //       todos: updtaeTodos,
+  //       id: uuid(),
+  //       content: "",
+  //       editContent: false,
+  //       compeleted: false,
+  //     });
+  //   }
+  // };
 
   deleteTodo = (id) => {
     const todos = this.state.todos.filter((todo) => {
@@ -69,28 +73,43 @@ class App extends Component {
     // console.log(searchField);
   };
 
-  handleEdit = (id) => {
-    if (this.state.content === "") {
-      const todos = this.state.todos.filter((todo) => {
-        return todo.id !== id;
-      });
-      const selectedContent = this.state.todos.find((item) => item.id === id);
+  // handleEdit = (id) => {
+  //   // console.log(id);
+  //   if (this.state.content === "") {
+  //     const todos = this.state.todos.filter((todo) => {
+  //       return todo.id !== id;
+  //     });
+  //     const selectedContent = this.state.todos.find((item) => item.id === id);
+  //     console.log(selectedContent);
 
-      this.setState({
-        todos,
-        content: selectedContent.content,
-        editContent: true,
-        compeleted: false,
-        id: id,
-      });
-    }
-  };
+  //     this.setState({
+  //       todos,
+  //       content: selectedContent.content,
+  //       editContent: true,
+  //       compeleted: false,
+  //       id: id,
+  //     });
+  //   }
+  // };
 
   toggleCompelete = (id) => {
     this.setState({
       todos: this.state.todos.map((todo) => {
         if (todo.id === id) {
           return { ...todo, compeleted: !todo.compeleted };
+        } else {
+          return todo;
+        }
+      }),
+    });
+  };
+
+  onEdit = (id) => {
+    this.setState({
+      todos: this.state.todos.map((todo) => {
+        if (todo.id === id) {
+          console.log(todo.editContent);
+          return { ...todo, editContent: !todo.editContent };
         } else {
           return todo;
         }
@@ -129,17 +148,28 @@ class App extends Component {
         <Addtodos
           editContent={this.state.editContent}
           content={this.state.content}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
+          addTodo={this.addTodo}
+          /* handleChange={this.handleChange} */
+          /* handleSubmit={this.handleSubmit} */
         />
         <Search searchChange={this.onSearchChange} />
         {/* with Router  */}
         <Router>
           <Nav updateToShow={this.updateToShow} />
           <Switch>
-            <Route path="/all">
+            <Route exact path="/">
               <Todos
                 todos={beforeFilteredTodos}
+                onEdit={this.onEdit}
+                toggleCompelete={this.toggleCompelete}
+                deleteTodo={this.deleteTodo}
+                handleEdit={this.handleEdit}
+              />
+            </Route>
+            <Route path="/all">
+              <Todos
+                todos={filteredTodos}
+                onEdit={this.onEdit}
                 toggleCompelete={this.toggleCompelete}
                 deleteTodo={this.deleteTodo}
                 handleEdit={this.handleEdit}
@@ -148,6 +178,7 @@ class App extends Component {
             <Route path="/process">
               <Todos
                 todos={filteredTodos}
+                onEdit={this.onEdit}
                 toggleCompelete={this.toggleCompelete}
                 deleteTodo={this.deleteTodo}
                 handleEdit={this.handleEdit}
@@ -156,6 +187,7 @@ class App extends Component {
             <Route path="/done">
               <Todos
                 todos={filteredTodos}
+                onEdit={this.onEdit}
                 toggleCompelete={this.toggleCompelete}
                 deleteTodo={this.deleteTodo}
                 handleEdit={this.handleEdit}
@@ -163,9 +195,8 @@ class App extends Component {
             </Route>
           </Switch>
         </Router>
-        <hr />
-        <h3>Without Router blow</h3>
-        {/* without Router */}
+        {/* <h3>Without Router blow</h3>
+        {/* without Router 
         <div className="button">
           <button onClick={() => this.updateToShow("all")}>All</button>
           <button onClick={() => this.updateToShow("processing")}>Processing</button>
@@ -177,7 +208,7 @@ class App extends Component {
           toggleCompelete={this.toggleCompelete}
           deleteTodo={this.deleteTodo}
           handleEdit={this.handleEdit}
-        />
+        /> */}
         <div className="center cyan-text">
           You have {this.state.todos.filter((todo) => !todo.compeleted).length} todos left!
         </div>

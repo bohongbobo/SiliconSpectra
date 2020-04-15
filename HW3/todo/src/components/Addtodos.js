@@ -2,24 +2,28 @@ import React, { Component } from "react";
 import "./Addtodos.css";
 
 class Addtodos extends Component {
-  // handleChange = (e) => {
-  //   this.setState({
-  //     content: e.target.value,
-  //   });
-  // };
+  state = {
+    content: "",
+  };
+  handleChange = (e) => {
+    this.setState({
+      content: e.target.value,
+    });
+  };
 
-  // handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (this.props.content !== "") {
-  //     this.props.addTodo(this.state);
-  //     this.setState({
-  //       content: "",
-  //     });
-  //   }
-  // };
+  handleSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.content !== "") {
+      this.props.addTodo(this.state);
+      this.setState({
+        content: "",
+      });
+    }
+  };
 
   render() {
-    const { handleSubmit, handleChange, editContent } = this.props;
+    const { editContent } = this.props;
+    const { handleSubmit, handleChange } = this;
 
     return (
       <div>
@@ -30,7 +34,7 @@ class Addtodos extends Component {
               type="text"
               className="white-text"
               onChange={handleChange}
-              value={this.props.content}
+              value={this.state.content}
             />
           </div>
           <button
@@ -41,7 +45,7 @@ class Addtodos extends Component {
             }
             onSubmit={handleSubmit}
           >
-            {editContent ? "Done" : "add"}
+            {editContent ? "Done" : "Add"}
           </button>
         </form>
       </div>
