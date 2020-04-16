@@ -15,7 +15,7 @@ class App extends Component {
     todos: [{ id: "unique", content: "aodnainds" }],
     // order: "",
     id: uuid(),
-    // content: "",
+    content: "",
     editContent: false,
     compeleted: false,
     todosToShow: "All",
@@ -117,6 +117,13 @@ class App extends Component {
     });
   };
 
+  handleChange = (e) => {
+    console.log(e.target.value);
+    this.setState({
+      content: e.target.value,
+    });
+  };
+
   updateToShow = (tar) => {
     this.setState({
       todosToShow: tar,
@@ -161,6 +168,7 @@ class App extends Component {
               <Todos
                 todos={beforeFilteredTodos}
                 onEdit={this.onEdit}
+                handleChange={this.handleChange}
                 toggleCompelete={this.toggleCompelete}
                 deleteTodo={this.deleteTodo}
                 handleEdit={this.handleEdit}
@@ -170,6 +178,7 @@ class App extends Component {
               <Todos
                 todos={filteredTodos}
                 onEdit={this.onEdit}
+                handleChange={this.handleChange}
                 toggleCompelete={this.toggleCompelete}
                 deleteTodo={this.deleteTodo}
                 handleEdit={this.handleEdit}
@@ -179,6 +188,7 @@ class App extends Component {
               <Todos
                 todos={filteredTodos}
                 onEdit={this.onEdit}
+                handleChange={this.handleChange}
                 toggleCompelete={this.toggleCompelete}
                 deleteTodo={this.deleteTodo}
                 handleEdit={this.handleEdit}
@@ -188,6 +198,7 @@ class App extends Component {
               <Todos
                 todos={filteredTodos}
                 onEdit={this.onEdit}
+                handleChange={this.handleChange}
                 toggleCompelete={this.toggleCompelete}
                 deleteTodo={this.deleteTodo}
                 handleEdit={this.handleEdit}

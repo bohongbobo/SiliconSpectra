@@ -4,11 +4,21 @@ import { Component } from "react";
 // import uuid from "react-uuid";
 
 class Todos extends Component {
-  state = {
-    order: 1,
-    content: "",
-  };
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     order: 1,
+  //     content: "",
+  //     todoList: [],
+  //   };
+  // }
 
+  // componentDidMount() {
+  //   console.log(this.props.todos);
+  //   this.setState({
+  //     todoList: this.props.todos,
+  //   });
+  // }
   setUpdate = (e, id) => {
     console.log(e.target.value);
     console.log(this.props.todos);
@@ -18,14 +28,13 @@ class Todos extends Component {
     });
   };
 
-  handleChange = (e) => {
-    this.setState({
-      content: e.target.value,
-    });
+  handleEdit = (e) => {
+    e.persist();
+    this.props.handleChange(e);
   };
 
   render() {
-    const { todos, onEdit, deleteTodo, toggleCompelete } = this.props;
+    const { todos, onEdit, handleChange, deleteTodo, toggleCompelete } = this.props;
     const todoList = todos.length ? (
       todos.map((todo) => {
         return (
@@ -35,7 +44,7 @@ class Todos extends Component {
                 id={todo.id}
                 className="col s12 m2 l2"
                 type="text"
-                value={this.state.order}
+                value={todo.order}
                 onChange={this.setUpdate}
                 placeholder="Enter the Priority"
               />
@@ -49,7 +58,7 @@ class Todos extends Component {
                     margin: "0",
                   }}
                 >
-                  <input type="text" value={todo.content} onChange={this.handleChange} />
+                  <input type="text" value={todo.content} onChange={this.handleEdit} />
                   <button
                     style={{
                       width: "5rem",
