@@ -19,6 +19,7 @@ class Addtodos extends Component {
         content: "",
       });
     }
+    console.log(this.state.todos);
   };
 
   render() {

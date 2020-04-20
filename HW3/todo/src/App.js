@@ -25,7 +25,7 @@ class App extends Component {
     todo.id = uuid();
     todo.order = 1;
     let todos = [...this.state.todos, todo];
-    console.log(this.state.editContent);
+    // console.log(this.state.editContent);
     this.setState({
       todos,
     });
@@ -70,7 +70,7 @@ class App extends Component {
 
   onSearchChange = (event) => {
     this.setState({ searchField: event.target.value });
-    // console.log(searchField);
+    // console.log(event.target.value);
   };
 
   // handleEdit = (id) => {
