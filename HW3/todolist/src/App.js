@@ -36,8 +36,7 @@ export default class App extends Component {
   toggleEdit = (id) => {
     const editTodo = this.state.todos.map((todo) => {
       if (todo.id === id) {
-        console.log(todo.editContent);
-
+        // console.log(todo.editContent);
         return { ...todo, editContent: !todo.editContent };
       } else {
         return todo;
@@ -48,6 +47,24 @@ export default class App extends Component {
       todos: editTodo,
     });
   };
+
+  saveNewtodo = (id, content) => {
+    this.setState({
+      todos: this.state.todos.map((todo) => {
+        return todo.id === id ? { ...todo, editContent: !todo.editContent, content } : todo;
+      }),
+    });
+  };
+
+  saveNewOrder = (id, order) => {
+    this.setState({
+      todos: this.state.todos.map((todo) => {
+        return todo.id === id ? { ...todo, order } : todo;
+      }),
+    });
+    console.log(this.state.order);
+  };
+
   render() {
     const filteredTodos = this.state.todos.filter((todo) => {
       return todo.content.toLowerCase().includes(this.state.searchField.toLocaleLowerCase());
@@ -58,7 +75,13 @@ export default class App extends Component {
         <h1 className="center cyan-text">TodoList</h1>
         <Addtodo addtodo={this.addtodo} />
         <Search handleSearchChange={this.handleSearchChange} />
-        <Todos todos={filteredTodos} deletetodo={this.deletetodo} toggleEdit={this.toggleEdit} />
+        <Todos
+          todos={filteredTodos}
+          deletetodo={this.deletetodo}
+          toggleEdit={this.toggleEdit}
+          saveNewtodo={this.saveNewtodo}
+          saveNewOrder={this.saveNewOrder}
+        />
       </div>
     );
   }

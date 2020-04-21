@@ -20,6 +20,7 @@ export default class Addtodo extends Component {
         content: this.state.content,
         editContent: false,
         compeleted: false,
+        order: 1,
       });
       this.setState({
         content: "",

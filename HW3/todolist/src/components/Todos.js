@@ -3,12 +3,21 @@ import Todoitem from "./Todoitem.js";
 
 export default class Todos extends Component {
   render() {
-    const { deletetodo, toggleEdit } = this.props;
+    const { deletetodo, toggleEdit, saveNewtodo, saveNewOrder } = this.props;
     return (
       <div>
-        {this.props.todos.map((todo) => (
-          <Todoitem key={todo.id} todo={todo} deletetodo={deletetodo} toggleEdit={toggleEdit} />
-        ))}
+        {this.props.todos
+          .sort((a, b) => a.order - b.order)
+          .map((todo) => (
+            <Todoitem
+              key={todo.id}
+              todo={todo}
+              deletetodo={deletetodo}
+              toggleEdit={toggleEdit}
+              saveNewtodo={saveNewtodo}
+              saveNewOrder={saveNewOrder}
+            />
+          ))}
       </div>
     );
   }
