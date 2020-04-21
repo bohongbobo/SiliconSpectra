@@ -38,7 +38,7 @@ export default class Todoitem extends Component {
       <div className="todos collection">
         <div className="collection-item center row">
           <input
-            className="col s12 m2 l2"
+            className="col s12 m2 l2 center"
             type="number"
             value={this.state.order}
             onChange={this.onChangeOrde}
