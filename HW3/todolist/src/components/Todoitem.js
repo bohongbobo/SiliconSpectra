@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./Todoitem.css";
 
 export default class Todoitem extends Component {
   state = {
