@@ -34,6 +34,7 @@ export default class Addtodo extends Component {
           <div className="col s12 m8 l10">
             <label>Add new todo: </label>
             <input
+              placeholder="Enter New Todo"
               type="text"
               className="white-text"
               value={this.state.content}

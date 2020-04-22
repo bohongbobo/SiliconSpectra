@@ -8,7 +8,8 @@ export default class Search extends Component {
         <form className="row">
           <div className="col s12 m12 l12">
             <label>Search todo: </label>
-            <input type="search" className="white-text" onChange={handleSearchChange} />
+            <input type="search" className="white-text" placeholder="Search"
+ onChange={handleSearchChange} />
           </div>
         </form>
       </div>

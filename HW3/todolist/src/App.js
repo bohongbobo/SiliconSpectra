@@ -13,7 +13,7 @@ export default class App extends Component {
 
   addtodo = (todo) => {
     this.setState({
-      todos: [todo, ...this.state.todos],
+      todos: [...this.state.todos, todo],
     });
     console.log(this.state.todos);
   };
