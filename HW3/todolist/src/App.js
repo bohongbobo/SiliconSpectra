@@ -8,6 +8,7 @@ export default class App extends Component {
   state = {
     todos: [],
     searchField: "",
+    sectionToShow: "all",
   };
 
   addtodo = (todo) => {
@@ -65,8 +66,40 @@ export default class App extends Component {
     console.log(this.state.order);
   };
 
+  toggleCompeleted = (id) => {
+    const compeletedTodo = this.state.todos.map((todo) => {
+      if (todo.id === id) {
+        // console.log(todo.editContent);
+        return { ...todo, compeleted: !todo.compeleted };
+      } else {
+        return todo;
+      }
+    });
+
+    this.setState({
+      todos: compeletedTodo,
+    });
+  };
+
+  updateShowSection = (button) => {
+    this.setState({
+      sectionToShow: button,
+    });
+    console.log(button);
+  };
+
   render() {
-    const filteredTodos = this.state.todos.filter((todo) => {
+    let todos = [];
+
+    if (this.state.sectionToShow === "all") {
+      todos = this.state.todos;
+    } else if (this.state.sectionToShow === "processing") {
+      todos = this.state.todos.filter((todo) => !todo.compeleted);
+    } else if (this.state.sectionToShow === "done") {
+      todos = this.state.todos.filter((todo) => todo.compeleted);
+    }
+
+    const filteredTodos = todos.filter((todo) => {
       return todo.content.toLowerCase().includes(this.state.searchField.toLocaleLowerCase());
     });
 
@@ -75,12 +108,33 @@ export default class App extends Component {
         <h1 className="center cyan-text">TodoList</h1>
         <Addtodo addtodo={this.addtodo} />
         <Search handleSearchChange={this.handleSearchChange} />
+        <div className="row">
+          <button
+            className="col s12 m4 l4 waves-effect waves-light btn-large"
+            onClick={() => this.updateShowSection("all")}
+          >
+            All
+          </button>
+          <button
+            className="col s12 m4 l4 waves-effect waves-light btn-large"
+            onClick={() => this.updateShowSection("processing")}
+          >
+            Processing
+          </button>
+          <button
+            className="col s12 m4 l4 waves-effect waves-light btn-large"
+            onClick={() => this.updateShowSection("done")}
+          >
+            Done
+          </button>
+        </div>
         <Todos
           todos={filteredTodos}
           deletetodo={this.deletetodo}
           toggleEdit={this.toggleEdit}
           saveNewtodo={this.saveNewtodo}
           saveNewOrder={this.saveNewOrder}
+          toggleCompeleted={this.toggleCompeleted}
         />
       </div>
     );

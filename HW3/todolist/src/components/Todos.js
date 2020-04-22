@@ -3,7 +3,7 @@ import Todoitem from "./Todoitem.js";
 
 export default class Todos extends Component {
   render() {
-    const { deletetodo, toggleEdit, saveNewtodo, saveNewOrder } = this.props;
+    const { deletetodo, toggleEdit, saveNewtodo, saveNewOrder, toggleCompeleted } = this.props;
     return (
       <div>
         {this.props.todos
@@ -16,6 +16,7 @@ export default class Todos extends Component {
               toggleEdit={toggleEdit}
               saveNewtodo={saveNewtodo}
               saveNewOrder={saveNewOrder}
+              toggleCompeleted={toggleCompeleted}
             />
           ))}
       </div>
