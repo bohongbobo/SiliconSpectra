@@ -20,8 +20,10 @@ export default class Todoitem extends Component {
     // console.log(e.target.value);
   };
 
-  onSave = () => {
-    this.props.saveNewtodo(this.props.todo.id, this.state.content);
+  onSave = (e) => {
+    if (e.key === "Enter" || e.target.type === "submit") {
+      this.props.saveNewtodo(this.props.todo.id, this.state.content);
+    }
   };
 
   onPress = (e) => {
@@ -49,11 +51,11 @@ export default class Todoitem extends Component {
                 className="col s12 m6 l6 center"
                 value={this.state.content}
                 onChange={this.handleChange}
-                /* onSubmit={() => this.onSave(todo.id, todo.content)} */
+                onKeyPress={(e) => this.onSave(e)}
               ></input>
               <button
                 className="col s12 m2 l2 waves-effect waves-light btn-large"
-                onClick={() => this.onSave(todo.id, todo.content)}
+                onClick={(e) => this.onSave(e)}
               >
                 Save
               </button>
