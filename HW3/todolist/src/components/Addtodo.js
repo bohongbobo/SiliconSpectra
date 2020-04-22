@@ -30,8 +30,8 @@ export default class Addtodo extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit} className="row">
-          <div className="col s12 m8 l10">
+        <form onSubmit={this.handleSubmit} className="row ">
+          <div className="col s12 m8 l10 ">
             <label>Add new todo: </label>
             <input
               placeholder="Enter New Todo"
@@ -41,6 +41,7 @@ export default class Addtodo extends Component {
               onChange={this.handleChaneg}
             />
           </div>
+          
           <button className="col s12 m4 l2 waves-effect waves-light btn-large ">ADD</button>
         </form>
       </div>

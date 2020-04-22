@@ -47,12 +47,13 @@ export default class Todoitem extends Component {
           />
           {todo.editContent === true ? (
             <div>
-              <input
+                <input
                 className="col s12 m6 l6 center"
-                value={this.state.content}
-                onChange={this.handleChange}
-                onKeyPress={(e) => this.onSave(e)}
-              ></input>
+                  value={this.state.content}
+                  onChange={this.handleChange}
+                  onKeyPress={(e) => this.onSave(e)}
+                ></input>
+              
               <button
                 className="col s12 m2 l2 waves-effect waves-light btn-large"
                 onClick={(e) => this.onSave(e)}
@@ -69,11 +70,13 @@ export default class Todoitem extends Component {
             </div>
           ) : (
             <div>
+            
               <h5
                 className="col s12 m6 l6"
                 style={{ textDecoration: todo.compeleted ? "line-through" : "" }}
                 onClick={() => toggleCompeleted(todo.id)}
               >
+       
                 {todo.content}
               </h5>
               <button
