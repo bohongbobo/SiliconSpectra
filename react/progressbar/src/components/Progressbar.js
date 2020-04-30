@@ -5,7 +5,7 @@ export default class Progressbar extends Component {
     const style = {
       height: "30px",
       width: `${this.props.progress}%`,
-      backgroundColor: "black",
+      backgroundColor: "cyan",
       borderRadius: "5px",
       transition: "width 0.1s ease-in-out",
     };

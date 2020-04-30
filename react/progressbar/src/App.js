@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-import ProgressBar from "./Progressbar";
+import FunctionalProgressBar from './components/FunctionalProgressBar'
+import ProgressBar from "./components/Progressbar";
 
 export default class App extends Component {
   state = {
@@ -42,13 +43,6 @@ export default class App extends Component {
   };
 
   render() {
-    const style = {
-      height: "30px",
-      width: `${this.state.progress}%`,
-      backgroundColor: "cyan",
-      borderRadius: "5px",
-      transition: "width 1s ease-in-out",
-    };
     return (
       <div className="App">
         <div className="buttons">
@@ -56,12 +50,10 @@ export default class App extends Component {
           <button onClick={this.increase}>Increase</button>
         </div>
         <div className="ProgressBarborder">
-          <div style={style}></div>
-        </div>
-
-        <div className="ProgressBarborder">
           <ProgressBar progress={this.state.progress} />
         </div>
+        <FunctionalProgressBar />
+
       </div>
     );
   }
