@@ -14,9 +14,9 @@ export default class App extends Component {
   // };
 
   // componentDidUpdate = () => {
-  //   if (this.state.progress > 100) {
+  //   if (this.state.progress >= 100) {
   //     setInterval(this.decrease, 100);
-  //   } else if (this.state.progress < 0) {
+  //   } else if (this.state.progress <= 0) {
   //     setInterval(this.increase, 100);
   //   }
   // };
@@ -47,7 +47,7 @@ export default class App extends Component {
       width: `${this.state.progress}%`,
       backgroundColor: "cyan",
       borderRadius: "5px",
-      transition: "width 0.1s ease-in-out",
+      transition: "width 1s ease-in-out",
     };
     return (
       <div className="App">
