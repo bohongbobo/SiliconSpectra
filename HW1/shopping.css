@@ -16,7 +16,7 @@ body {
 }
 
 .navContainer {
-  margin-top: 63px;
+  margin-top: 60px;
   background-color: white;
   width: 100%;
   position: fixed;
@@ -79,9 +79,9 @@ a {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  width: 90%;
+  width: 100%;
   height: 300px;
-  left: 61px;
+  left: 0;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
@@ -152,30 +152,30 @@ h4 {
   grid-gap: 10px;
   /* width: 100%; */
   /* grid-template-columns: 16.66% 16.66% 16.66% 16.66% 16.66% 16.66%; */
-  grid-template-columns: repeat(6, 186px);
-  grid-template-rows: repeat(9, 180.85px);
+  grid-template-rows: repeat(20, auto);
+  grid-template-columns: repeat(20, auto);
   /* grid-template-columns: 20% 20% 20% 20% 20%; */
   /* grid-template-columns: 25% 25% 25% 25%; */
 }
 
 .first {
-  grid-column: 1 / 4;
-  grid-row: 1 / 3;
+  grid-column: 1 / 15;
+  grid-row: 1 / 8;
   position: relative;
 }
 
 #sea {
   /*  position: relative;
 */
-  width: 134%;
-  height: 152%;
+  width: 100%;
+  height: 100%;
 }
 .islandCard {
   /* display: none; */
   padding: 20px;
   position: absolute;
-  top: 26%;
-  left: 20%;
+  top: 8em;
+  left: 4em;
   text-align: center;
   background-color: white;
   opacity: 0;
@@ -191,15 +191,15 @@ h4 {
 }
 
 .second {
-  grid-column: 5 / 6;
-  grid-row: 1 / 4;
+  grid-column: 15 / 21;
+  grid-row: 1 / 10;
   position: relative;
 }
 
 #cars {
   position: relative;
-  width: 178%;
-  height: 755px;
+  width: 100%;
+  height: 100%;
 }
 .dodgeCard {
   /* display: none; */
@@ -222,8 +222,8 @@ h4 {
 }
 
 .third {
-  grid-column: 1 / 4;
-  grid-row: 4 / 6;
+  grid-column: 1 / 9;
+  grid-row: 8 / 13;
   position: relative;
 }
 
@@ -253,8 +253,8 @@ h4 {
 }
 
 .fourth {
-  grid-column: 4;
-  grid-row: 4 / 8;
+  grid-column: 9 / 15;
+  grid-row: 8 / 16;
   position: relative;
 }
 
@@ -285,8 +285,8 @@ h4 {
 }
 
 .fifth {
-  grid-column: 1 / 4;
-  grid-row: 6 / 10;
+  grid-column: 1 / 9;
+  grid-row: 13 / 21;
   position: relative;
 }
 
@@ -308,8 +308,8 @@ h4 {
 }
 
 #tiffany_111 {
-  width: 80%;
-  height: 553px;
+  width: 100%;
+  height: 100%;
 }
 .tiffany_111Card:hover {
   /* display: block; */
@@ -317,14 +317,14 @@ h4 {
 }
 
 .sixth {
-  grid-column: 5 / 6;
-  grid-row: 5 / 8;
+  grid-column: 15 / 21;
+  grid-row: 10 / 16;
   position: relative;
 }
 
 #games {
   position: relative;
-  width: 178%;
+  width: 100%;
   height: 100%;
 }
 .ggCard {
@@ -349,8 +349,8 @@ h4 {
 }
 
 .seventh {
-  grid-column: 4 / 6;
-  grid-row: 8 / 10;
+  grid-column: 9 / 21;
+  grid-row: 16 / 21;
 
   position: relative;
 }
