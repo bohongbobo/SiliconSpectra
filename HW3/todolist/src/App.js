@@ -31,7 +31,7 @@ export default class App extends Component {
     this.setState({
       searchField: e.target.value,
     });
-    // console.log(e.target.value);
+    console.log(e.target.value);
   };
 
   toggleEdit = (id) => {
